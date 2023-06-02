@@ -4,7 +4,7 @@ Official code for ACL 2023 paper: [Multilingual LLMs are Better Cross-lingual In
 
 To run the corresponding experiments run following:-
 
-Please followthe instructions in dataset_processing.ipynb for preprocessing the data
+Please follow the instructions in dataset_processing.ipynb for preprocessing the data
 
 run dataset_creation.py to generate setups
 
