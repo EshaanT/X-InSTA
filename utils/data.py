@@ -278,34 +278,6 @@ def sample_from_dataframe(df,k,seed):
     df_train_k=df.sample(k, random_state=seed)
 
     return df_train_k.reset_index(drop=True)
-
-def sample_topic_from_dataframe(df,k,seed):
-
-    demo_dic={}
-
-    demo_dic['random']=df.sample(k, random_state=seed).to_dict(orient='records')
-
-    uniq_topic=df['topic_number'].unique()
-
-    for i in uniq_topic:
-
-        df_t=df[df['topic_number'].isin([i])].reset_index(drop=True)
-        df_t=df_t.sample(min(k,len(df_t)),random_state=seed)
-
-        p_k=k-len(df_t)
-
-        print(f"For Topic {i} we sampled {len(df_t)} in topic and {p_k} random")
-
-        _df_t=df[~df['id'].isin(df_t['id'])].reset_index(drop=True)
-
-        need_df=_df_t.sample(p_k,random_state=seed)
-
-        topic_df=pd.concat([df_t, need_df]).reset_index(drop=True).to_dict(orient='records')
-
-        assert len(topic_df)==k
-        demo_dic[i]=topic_df
-
-    return demo_dic,uniq_topic
  
 def input_form_converter(dataset_name,test_df,demo_df=[]):
     
@@ -497,17 +469,5 @@ def load_data(dataset_name,tar,src,set_up,seed,k=16):
 
     return data
 
-def main():
-    create_few_shots(dataset_name='amaz_bi',k=4,seeds=[32,5,232,100,42],set_up='src_is_cross')
-    create_few_shots(dataset_name='amaz_bi',k=4,seeds=[32,5,232,100,42],set_up='sim_in_cross')
-    
-    create_few_shots(dataset_name='xnli',k=4,seeds=[32,5,232,100,42],set_up='src_is_cross')
-    create_few_shots(dataset_name='xnli',k=4,seeds=[32,5,232,100,42],set_up='sim_in_cross')
-    
-    create_few_shots(dataset_name='xnli',k=4,seeds=[32,5,232,100,42],set_up='src_is_cross')
-    create_few_shots(dataset_name='xnli',k=4,seeds=[32,5,232,100,42],set_up='sim_in_cross')
-
-if __name__=='__main__':
-    main()
     
     
