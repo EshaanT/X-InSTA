@@ -93,7 +93,7 @@ def main(args):
                 groundtruths=[dp['output'] for dp in test_data]
                 eval_dic=data.evaluate(predictions,groundtruths)
 
-                if args.dataset_name in ['amaz_bi','hateval','hasoc','cls']:
+                if args.dataset_name in ['amaz_bi','hateval','cls']:
                     eval_dic['f1']=f1_score(groundtruths,predictions,average='macro')
                 eval_dic['seed']=s
                 eval_dic['dataset_name']=args.dataset_name
