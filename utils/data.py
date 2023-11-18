@@ -4,8 +4,6 @@ import pandas as pd
 import pickle
 from sklearn.model_selection import train_test_split
 from sentence_transformers import SentenceTransformer, util
-from sklearn.cluster import KMeans
-from sklearn.decomposition import PCA
 
 
 def get_logic(tar,src,dataset,flip,simple=False):
@@ -337,10 +335,9 @@ def create_few_shots(dataset_name='amaz_bi',src_l=None,k=16,seeds=[32,5,232,100,
     train_set=f'data/processed/{dataset_name}_train.csv'
     test_set = f'data/processed/{dataset_name}_test.csv'
 
-    if set_up in ['sim_as_tar','sim_in_en','sim_in_cross','divers_as_tar','l_divers_as_tar','c_divers_as_tar']:
+    if set_up in ['sim_in_cross']:
         from sentence_transformers import SentenceTransformer, util
         import torch
-        #embedder = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')
         embedder = SentenceTransformer('distiluse-base-multilingual-cased-v1')
 
 
@@ -401,22 +398,13 @@ def create_few_shots(dataset_name='amaz_bi',src_l=None,k=16,seeds=[32,5,232,100,
                     test_final = df_test_l.to_dict(orient='records')
                     corpus_input=df_train_l['input'].to_list()
                     corpus_out=df_train_l['output'].to_list()
-
-                
-                    if dataset_name=='xcodah':
-                        corpus=df_train_l['output'].to_list()
-                    else:
-                        corpus=df_train_l['input'].to_list()
+                    corpus=df_train_l['input'].to_list()
                     corpus_embeddings = embedder.encode(corpus, convert_to_tensor=True)
 
                     top_k=k
 
                     for df in test_final:
-
-                        if dataset_name=='xcodah':
-                            query=df['output']
-                        else:
-                            query=df['input']
+                        query=df['input']
                         query_embedding = embedder.encode(query, convert_to_tensor=True)
 
                         cos_scores = util.cos_sim(query_embedding, corpus_embeddings)[0]
