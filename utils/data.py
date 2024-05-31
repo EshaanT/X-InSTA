@@ -373,6 +373,8 @@ def create_few_shots(dataset_name='amaz_bi',src_l=None,k=16,seeds=[32,5,232,100,
                 src_l.remove(l)
 
                 for src in src_l: 
+
+                     """Sample demonstration from src language """
                     df_train_l=df_train[df_train['language'].isin([src])].reset_index(drop=True)
                     df_test_l=df_test[df_test['language'].isin([l])].reset_index(drop=True)
 
