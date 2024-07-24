@@ -8,4 +8,4 @@ Please follow the instructions in dataset_processing.ipynb for preprocessing the
 
 run dataset_creation.py to generate setups
 
-run MARC, CLS and Hateval usin MARC_run.py, cs_run.py and hateval_run.py
+run MARC, CLS and Hateval using MARC_run.py, cs_run.py and hateval_run.py
